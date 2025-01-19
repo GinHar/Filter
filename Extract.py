@@ -27,7 +27,7 @@ def extract_rgb_matrix(image_path):
 def combine_rgb_matrix(R, G, B):
     # Verify that the three matrix have the same shape
     if R.shape != G.shape or R.shape != B.shape:
-        raise ValueError("Las matrices R, G y B deben tener la misma forma.")
+        raise ValueError("R ,G and B need to have the same shape.")
     
     # Combine the three matrix in one array
     img_array = np.stack((R, G, B), axis=-1)
@@ -43,7 +43,7 @@ def combine_rgb_matrix(R, G, B):
 
 def extract_intensities(image_path):
     # Load the image in black and white
-    img = Image.open(image_path).convert('L')  # 'L' para convertir a escala de grises
+    img = Image.open(image_path).convert('L')  # 'L' to have the intensity like an image in black and white
     
     # Convert the image in an array
     intensity_array = np.array(img)
@@ -55,7 +55,7 @@ def create_image_from_intensity(intensity_array):
     intensity_array = intensity_array.astype(np.uint8)
     
     # Create an image from an array
-    img = Image.fromarray(intensity_array, mode='L')  # 'L' para imagen en escala de grises
+    img = Image.fromarray(intensity_array, mode='L') # 'L' to have the intensity like an image in black and white
     
     return img
 
