@@ -34,10 +34,33 @@ while True:
 
 
 tamaño = array([[0]])
-frame_number = 0
+frame_number = 1
 
-#Limitamos a 96 frames porque los errores a partir de ahí son muy grandes
-for i in range(frame_number):
+image_path = "Frame"+str(0)+".jpg"  # Ruta de la imagen
+I = extract_intensities(image_path)
+    
+#Gauss+Sobel
+I = aplicar_gauss(I)
+I = aplicar_sobel(I)
+    
+    
+img1 = create_image_from_intensity(I)
+img1.save('Foto'+str(0)+'.jpg')
+
+video_name = 'video_filtrado.avi'
+# Leer la primera imagen para obtener la resolución
+imagen = cv2.imread(imagenes[0])
+alto, ancho, _ = imagen.shape
+
+# Crear el objeto VideoWriter
+fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Formato de compresión
+fps = 30  # Frames por segundo
+out = cv2.VideoWriter(video_name, fourcc, fps, (ancho, alto))
+
+img = cv2.imread('Foto'+str(0)+'.jpg')
+out.write(img)  # Escribir la imagen en el video
+
+for i in range(frame_number,cap.get(cv2.CAP_PROP_FRAME_COUNT)):
     image_path = "Frame"+str(i)+".jpg"  # Ruta de la imagen
     I = extract_intensities(image_path)
     
@@ -47,5 +70,7 @@ for i in range(frame_number):
     
     
     img1 = create_image_from_intensity(I)
-    img1.save('MM_III\Foto'+str(i)+'.jpg')
+    img1.save('Foto'+str(i)+'.jpg')
+    img = cv2.imread('Foto'+str(i)+'.jpg')
+    out.write(img)  # Escribir la imagen en el video
     
