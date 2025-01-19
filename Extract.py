@@ -1,64 +1,62 @@
 from PIL import Image
 import numpy as np
 
-def extract_rgb_matrices(image_path):
-    # Cargar la imagen
+"""
+Here there are four functions.
+
+extract_rgb_matrix takes an image in colour and gives three matrix with the intensities of red, green and blue.
+combine_rgb_matrix takes three matrix with the colour intensities and gives an image.
+extract_intensities takes an image and gives a matrix with the intensity of each pixel.
+create_image_from_intensity takes a matrix with the intensity of each pixel and gives an image in black and white
+"""
+
+def extract_rgb_matrix(image_path):
+    # Load the image
     img = Image.open(image_path)
     
-    # Convertir la imagen a un array de numpy
+    # Convert the image in an array
     img_array = np.array(img)
 
-    # Extraer los canales R, G y B
+    # Extract red, green and blue
     R = img_array[:,:,0]  # Canal rojo
     G = img_array[:,:,1]  # Canal verde
     B = img_array[:,:,2]  # Canal azul
     
     return R, G, B
 
-def combine_rgb_matrices(R, G, B):
-    # Verificar que las matrices tienen la misma forma
+def combine_rgb_matrix(R, G, B):
+    # Verify that the three matrix have the same shape
     if R.shape != G.shape or R.shape != B.shape:
         raise ValueError("Las matrices R, G y B deben tener la misma forma.")
     
-    # Combinar las matrices en un solo array
+    # Combine the three matrix in one array
     img_array = np.stack((R, G, B), axis=-1)
     
-    # Convertir el array a tipo uint8
+    # Convert the array to uint8
     img_array = img_array.astype(np.uint8)
     
-    # Crear la imagen a partir del array
+    # Create the image
     img = Image.fromarray(img_array)
     
     return img
 
-    """
-    reconstructed_image.save('ruta/a/tu/nueva_imagen.jpg')
-    """
-
 
 def extract_intensities(image_path):
-    # Cargar la imagen en escala de grises
+    # Load the image in black and white
     img = Image.open(image_path).convert('L')  # 'L' para convertir a escala de grises
     
-    # Convertir la imagen a un array de numpy
+    # Convert the image in an array
     intensity_array = np.array(img)
 
     return intensity_array
 
 def create_image_from_intensity(intensity_array):
-    # Convertir la matriz de intensidades a tipo uint8
+    # Convert the matrix to uint8
     intensity_array = intensity_array.astype(np.uint8)
     
-    # Crear una imagen a partir del array
+    # Create an image from an array
     img = Image.fromarray(intensity_array, mode='L')  # 'L' para imagen en escala de grises
     
     return img
-
-
-############################################################################################################################
-############################################################################################################################
-############################################################################################################################
-############################################################################################################################
-############################################################################################################################
 
 
