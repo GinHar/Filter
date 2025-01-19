@@ -1,37 +1,44 @@
 from numpy import array,sqrt, pad
 from numpy.fft import rfft2, irfft2
 
+"""
+Here there are four functions:
 
+convolution_rfft is a function that takes an image and a filter an make the convolution between both.
+Sobel is a function that takes an image and applies a Sobel filter
+Gauss is a function that takes an image and applies a Gauss filter
+Scharr is a function that takes an image and applies a Scharr filter
+"""
 
-def convolucion_rfft(imagen, kernel):
-    # Obtener las dimensiones de la imagen y del kernel
-    altura, ancho = imagen.shape
-    k_altura, k_ancho = kernel.shape
+def convolution_rfft(image, kernel):
+    # Obtain the shape of the image and the kernel
+    height, width = image.shape
+    k_height, k_width = kernel.shape
 
-    # Calcular las dimensiones para la FFT
-    output_shape = (altura + k_altura - 1, ancho + k_ancho - 1)
+    # Calculate the shape for the FFT
+    output_shape = (height + k_height - 1, width + k_width - 1)
     
-    # Zero-pad de la imagen y el kernel
-    padded_imagen = pad(imagen, ((0, k_altura - 1), (0, k_ancho - 1)), mode='constant')
-    padded_kernel = pad(kernel, ((0, output_shape[0] - k_altura), (0, output_shape[1] - k_ancho)), mode='constant')
+    # Zero-pad to the image and filter
+    padded_image = pad(image, ((0, k_height - 1), (0, k_width - 1)), mode='constant')
+    padded_kernel = pad(kernel, ((0, output_shape[0] - k_height), (0, output_shape[1] - k_width)), mode='constant')
 
-    # Calcular la FFT de la imagen y el kernel
-    fft_imagen = rfft2(padded_imagen)
+    # Calculate the FFT
+    fft_image = rfft2(padded_image)
     fft_kernel = rfft2(padded_kernel)
 
-    # Multiplicar en el dominio de la frecuencia
-    fft_resultado = fft_imagen * fft_kernel
+    # Multiply in the frecuency domain
+    fft_result = fft_image * fft_kernel
 
-    # Calcular la inversa de la FFT para obtener la convolución
-    resultado = irfft2(fft_resultado)
+    # Calculate the IFFT to obtain the convolution
+    result = irfft2(fft_result)
 
-    # Retornar solo la parte que corresponde a la imagen original
-    return resultado[:altura, :ancho]
+    # Return the new image
+    return result[:height, :width]
 
 
-#Filtro Sobel
-def aplicar_sobel(imagen):
-    #Kernel Sobel
+#Sobel filter
+def Sobel(image):
+    #Sobel Kernel
     kx = array([[-1,0,+1],
             [-2,0,+2],
             [-1,0,+1]])
@@ -39,31 +46,31 @@ def aplicar_sobel(imagen):
     ky = array([[-1,-2,-1],
             [0,0,0],
             [+1,2,+1]])
-    # Aplicar la convolución con los operadores de Sobel
-    gradiente_x = convolucion_rfft(imagen, kx)
-    gradiente_y = convolucion_rfft(imagen, ky)
+    # Apply the convolution to the filters
+    gradiente_x = convolution_rfft(image, kx)
+    gradiente_y = convolution_rfft(image, ky)
     
-    # Calcular la magnitud del gradiente
-    magnitud = sqrt(gradiente_x**2 + gradiente_y**2)
+    # Calculate the gradient's magnitude
+    magnitude = sqrt(gradiente_x**2 + gradiente_y**2)
     
-    return magnitud
+    return magnitude
 
 
-#Filtro Gaussiana
-def aplicar_gauss(imagen):
-    #Kernel de Suavizado
+#Gaussian filter
+def Gauss(image):
+    #Kernel
     Gauss = 1/159*array([[2,4,5,4,2],
                     [4,9,12,9,4],
                     [5,12,15,12,5],
                     [4,9,12,9,4],
                     [2,4,5,4,2]])
-    # Aplicar la convolución con los operadores de Gauss
-    suavizado = convolucion_rfft(imagen, Gauss)
-    return suavizado
+    # Apply the convolution to the filter
+    result = convolution_rfft(image, Gauss)
+    return result
 
 
-#Filtro Scharr
-def aplicar_scharr(imagen):
+#Scharr Filter
+def Scharr(image):
     #Kernel Scharr
     sx = array([[3,0,-3],
             [10,0,-10],
@@ -72,14 +79,14 @@ def aplicar_scharr(imagen):
     sy = array([[3,10,3],
             [0,0,0],
             [-3,-10,-3]])
-    # Aplicar la convolución con los operadores de Schar
-    gradiente_x = convolucion_rfft(imagen, sx)
-    gradiente_y = convolucion_rfft(imagen, sy)
+    # Apply the convolution to the filters
+    gradiente_x = convolution_rfft(image, sx)
+    gradiente_y = convolution_rfft(image, sy)
     
-    # Calcular la magnitud del gradiente
-    magnitud = sqrt(gradiente_x**2 + gradiente_y**2)
+    # Calculate the gradient's magnitude
+    magnitude = sqrt(gradiente_x**2 + gradiente_y**2)
     
-    return magnitud
+    return magnitude
 
 
 
