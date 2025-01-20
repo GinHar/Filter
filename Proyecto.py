@@ -1,4 +1,4 @@
-from Filtros import convolution_rfft, Gauss, Sobel
+from Filters import convolution_rfft, Gauss, Sobel
 from Extract import extract_intensities,create_image_from_intensity
 from numpy import where, any, empty, array, arange, hstack,exp, polyfit, sqrt, std, sum, mean,diag, linspace,log, savetxt
 from pylab import show, imshow, plot, scatter, xlabel, ylabel, legend, title, errorbar
