@@ -66,6 +66,9 @@ for i in range(frame_number,cap.get(cv2.CAP_PROP_FRAME_COUNT)):
     #Gauss+Sobel
     I = Gauss(I)
     I = Sobel(I)
+
+    #Threshold
+    I = where(I >= 110, 255, 0)
     
     
     img1 = create_image_from_intensity(I)
