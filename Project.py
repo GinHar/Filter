@@ -6,7 +6,7 @@ import cv2
 
 
 # Video's path
-video_path = "Video.mp4"  # Cambia esto a la ruta de tu video
+video_path = "Video.mp4"
 frame_number = 0
 
 # Load the video with OpenCV
