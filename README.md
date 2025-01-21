@@ -1,8 +1,8 @@
 # Filter
 This program takes a video and manipulated to highlight the edges.
 
-<video src="https://raw.github.com/GinHar/Filter/blob/main/Video.mp4" width="300" />
-<video src="https://raw.github.com/GinHar/Filter/blob/main/Video_filter.mp4" width="300" />
+<video src="https://github.com/GinHar/Filter/blob/main/Video.mp4" width="300" />
+<video src="https://github.com/GinHar/Filter/blob/main/Video_filter.mp4" width="300" />
 
 ## Project.py
 The code that manipulates the video. You give the video's path and the program separate the video in frames and save them as "Frame#.jpg"  as . After, the code takes all the frames and passes a Gaussian and a Sobel filter, and a treshold. Then, it saves all this  manipulated frames as "Photo#.jpg". Finally, it converts this manipulated frames in a video.
