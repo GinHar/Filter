@@ -1,7 +1,7 @@
 # Filter
 This program takes a video and manipulated to highlight the edges.
 
-https://github.com/user-attachments/assets/8913921b-5871-48c2-b486-f5bf1a11e807
+https://github.com/user-attachments/assets/204ec508-06ff-4c3e-b2c7-361578e7fdd0
 
 ## Project.py
 The code that manipulates the video. You give the video's path and the program separate the video in frames and save them as "Frame#.jpg"  as . After, the code takes all the frames and passes a Gaussian and a Sobel filter, and a treshold. Then, it saves all this  manipulated frames as "Photo#.jpg". Finally, it converts this manipulated frames in a video.
